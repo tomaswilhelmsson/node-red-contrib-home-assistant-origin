@@ -7,7 +7,7 @@ module.exports = function(RED) {
                 node.status({
                     fill: "red",
                     shape: "dot",
-                    text: `Invalid (No context)`
+                    text: `Invalid (No data)`
                 });
                 node.send([null, null, null, { payload: true }]);
                 return;
@@ -33,24 +33,16 @@ module.exports = function(RED) {
                     node.send([null, msg, null, { payload: false }])
                 else if(context.payload.id != null && context.payload.parent_id != null && context.payload.user_id == null)
                     node.send([null, null, msg, { payload: false}])
+
+                node.status({
+                    fill: "green",
+                    shape: "dot",
+                    text: `Valid input`
+                });
             } else {
                 node.send([null, null, null, { payload: true }]);
             }
         });
-
-        
-        function findByKey(obj, kee) {
-            let found_objects = [];
-            if (kee in obj) return [obj[kee]];
-//            for(const [key, n] of Object.entries(obj).filter(Boolean).filter(v => typeof v === 'object')) {
-            node.warn(obj);
-            for(n of Object.values(obj).filter(Boolean).filter(v => typeof v === 'object')) {
-                node.warn(n);
-                let found = findByKey(n, kee)
-                if (found) found_objects.push(found);
-            }
-            return found_objects;
-        }
     }
 
 

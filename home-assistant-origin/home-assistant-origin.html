@@ -17,9 +17,22 @@
 </script>
 
 <script type="text/html" data-template-name="home-assistant-origin">
-
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
 </script>
 
 <script type="text/html" data-help-name="lower-case">
     <p>A simple node to find out the origin of an message from home assistant (Device, UI, Automation)</p>
+    <p>
+    The node ouputs to one of 3 outputs depending on where the change originated from.
+    </p>
+    <p>Outputs</p>
+    <ul>
+        <li><code>Unknown</code> - The change originates from an unknown source, for example a device</li>
+        <li><code>UI</code> - The change originates from an UI component of some kind</li>
+        <li><code>Other</code> - The change originates from for example an Automation</li>
+        <li><code>Invalid</code> - The message was invalid for this node</li>
+    </ul>
 </script>
