@@ -3,11 +3,21 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            var context = findByKey(msg.payload, 'context');
+            if(msg.data == 'undefined') {
+                node.status({
+                    fill: "red",
+                    shape: "dot",
+                    text: `Invalid (No context)`
+                });
+                node.send([null, null, null, { payload: true }]);
+                return;
+            }
+
+            var context = findByKey(msg.data, 'context');
             node.log(context);
-            
+
             msg.payload = msg.payload.toLowerCase();
-            node.send([msg, msg, msg]);
+            node.send([msg, msg, msg, { payload: false }]);
         });
     }
 
