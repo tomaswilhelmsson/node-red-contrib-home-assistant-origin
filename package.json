@@ -1,0 +1,26 @@
+{
+  "name": "node-red-contrib-home-assistant-origin",
+  "version": "0.0.1",
+  "description": "A node to find out the origin of an home assistant event",
+  "author": "Tomas Wilhelmsson (https://https://github.com/tomaswilhelmsson/)",
+  "dependencies": {},
+  "keywords": [
+    "node-red",
+    "range",
+    "region",
+    "zone",
+    "origin",
+    "threshold"
+  ],
+  "homepage": "https://github.com/tomaswilhelmsson/node-red-contrib-home-assistant-origin",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomaswilhelmsson/node-red-contrib-home-assistant-origin"
+  },
+  "node-red": {
+    "nodes": {
+      "excursion-advanced": "home-assistant-origin/home-assistant-origin.js"
+    }
+  }
+}

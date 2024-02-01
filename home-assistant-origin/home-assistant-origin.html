@@ -1,0 +1,25 @@
+<script type="text/javascript">
+    RED.nodes.registerType('home-assistant-origin',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""}
+        },
+        inputs: 1,
+        outputs: 4,
+        icon: "file.svg",
+        label: function() {
+            return this.name||"origin";
+        },
+        outputLabels: ["unknown", "ui", "other", "invalid"]
+
+    });
+</script>
+
+<script type="text/html" data-template-name="home-assistant-origin">
+
+</script>
+
+<script type="text/html" data-help-name="lower-case">
+    <p>A simple node to find out the origin of an message from home assistant (Device, UI, Automation)</p>
+</script>
