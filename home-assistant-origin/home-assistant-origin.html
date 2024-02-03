@@ -6,12 +6,11 @@
             name: {value:""}
         },
         inputs: 1,
-        outputs: 4,
+        outputs: 1,
         icon: "file.svg",
         label: function() {
             return this.name||"origin";
-        },
-        outputLabels: ["unknown", "ui", "other", "invalid"]
+        }
 
     });
 </script>
@@ -26,13 +25,13 @@
 <script type="text/html" data-help-name="home-assistant-origin">
     <p>A simple node to find out the origin of an message from home assistant (Device, UI, Automation)</p>
     <p>
-    The node ouputs to one of 3 outputs depending on where the change originated from.
+    The node will add a new field named "origin" that indicates where the message came from.
     </p>
-    <p>Outputs</p>
+    <p>origin field:</p>
     <ul>
-        <li><code>Unknown</code> - The change originates from an unknown source, for example a device</li>
-        <li><code>UI</code> - The change originates from an UI component of some kind</li>
-        <li><code>Other</code> - The change originates from for example an Automation</li>
-        <li><code>Invalid</code> - The message was invalid for this node</li>
+        <li><code>unknown</code> - The change originates from an unknown source, for example a device</li>
+        <li><code>ui</code> - The change originates from an UI component of some kind</li>
+        <li><code>other</code> - The change originates from for example an Automation</li>
+        <li><code>invalid</code> - The message was invalid for this node</li>
     </ul>
 </script>

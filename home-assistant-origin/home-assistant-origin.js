@@ -3,36 +3,18 @@ module.exports = function(RED) {
         RED.nodes.createNode(this,config);
         var node = this;
         node.on('input', function(msg) {
-            if(msg.data == 'undefined') {
-                node.status({
-                    fill: "red",
-                    shape: "dot",
-                    text: `Invalid (No data)`
-                });
-                node.send([null, null, null, { payload: true }]);
-                return;
-            }
+            var origin = null;
 
-            var context = null;
-            if(msg.data.hasOwnProperty("context"))
-                context = {
-                    topic: "sensor",
-                    payload: msg.data.context
-                }
-            else if(msg.data.hasOwnProperty("old_state") && msg.data.hasOwnProperty("new_state")) {
-                context = {
-                    topic: "state_change",
-                    payload: msg.data.new_state.context
-                }
-            }
-
-            if(context.topic === "sensor" || context.topic == "state_change") {
-                if(context.payload.id != null && context.payload.parent_id == null && context.payload.user_id == null)
-                    node.send([msg, null, null, { payload: false }])
-                else if(context.payload.id != null && context.payload.parent_id == null && context.payload.user_id != null)
-                    node.send([null, msg, null, { payload: false }])
-                else if(context.payload.id != null && context.payload.parent_id != null && context.payload.user_id == null)
-                    node.send([null, null, msg, { payload: false}])
+            if(msg.hasOwnProperty("data") && 
+                (msg.data.hasOwnProperty("context") || 
+                (msg.data.hasOwnProperty("old_state") && msg.data.hasOwnProperty("new_state")))) {
+                var context = msg.data?.context || msg.data.new_state.context;
+                if(context.id != null && context.parent_id == null && context.user_id == null)
+                    origin = "unknown";
+                else if(context.id != null && context.parent_id == null && context.user_id != null)
+                    origin = "ui";
+                else if(context.id != null && context.parent_id != null && context.user_id == null)
+                    origin = "other";
 
                 node.status({
                     fill: "green",
@@ -40,11 +22,18 @@ module.exports = function(RED) {
                     text: `Valid input`
                 });
             } else {
-                node.send([null, null, null, { payload: true }]);
+                node.status({
+                    fill: "red",
+                    shape: "dot",
+                    text: `Invalid (no context)`
+                });
+                origin = "invalid";
             }
+
+            msg.origin = origin;
+            node.send(msg);
         });
     }
-
 
     RED.nodes.registerType("home-assistant-origin",HomeAssistantOriginNode);
 }
